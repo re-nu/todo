@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import './App.css';
-import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
@@ -22,6 +21,11 @@ function App() {
        onClick={()=>settodo([...todo,addTodo])}
        variant="outlined">Add
       </Button>
+      <Button 
+       onClick={()=>{<Complete checked={checked} />}
+      }
+       variant="outlined">Completed
+      </Button>
         {todo.map((td,index)=>(
           <TodoList list={td} checked={checked} setchecked={setchecked} key={index}/>
         ))}
@@ -30,6 +34,20 @@ function App() {
 }
 
 export default App;
+
+function Complete({checked}) {
+  console.log("complete component")
+  return(
+    <div className='complete'>
+      {checked.map((i)=>(
+        <div className='complete-item'>
+          {i}
+        </div>
+      ))}
+    </div>
+  )
+  
+}
 
 function TodoList({list,checked,setchecked}) {
   
