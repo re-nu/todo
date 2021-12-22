@@ -9,6 +9,8 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 function App() {
   const [todo,settodo]=useState(["code kata","web kata","class tasks"])
   const [addTodo,setaddTodo]=useState("")
+  const [checked,setchecked]=useState([])
+  console.log(checked)
   return (
     <div className="App">
      <TextField 
@@ -20,8 +22,8 @@ function App() {
        onClick={()=>settodo([...todo,addTodo])}
        variant="outlined">Add
       </Button>
-        {todo.map((td)=>(
-          <TodoList list={td}/>
+        {todo.map((td,index)=>(
+          <TodoList list={td} checked={checked} setchecked={setchecked} key={index}/>
         ))}
     </div>
   );
@@ -29,10 +31,22 @@ function App() {
 
 export default App;
 
-function TodoList({list}) {
+function TodoList({list,checked,setchecked}) {
+  
   return(
     <div className='todo-list'>
-      <FormControlLabel control={<Checkbox  />} label={list} />
+      <FormControlLabel control={<Checkbox 
+      onClick={(e)=>{
+        if(e.target.checked===true){
+          setchecked([...checked,e.target.name])
+        }
+        else{
+          const remaining=checked.filter((i)=>!(i===e.target.name))
+           setchecked([...remaining])
+        }
+        
+      }}
+       />} label={list} name={list} />
     </div>
   )
 }
